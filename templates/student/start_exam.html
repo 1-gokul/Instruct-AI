@@ -11,28 +11,173 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet"
         href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        #floating-window {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            cursor: move;
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        .jumbotron {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        #floating-window {
+        position: absolute;
+        top: 10px; /* Adjust the value as needed */
+        left: 10px; /* Adjust the value as needed */
+        width: 250px;
+        height: 220px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: grab;
+        z-index: 1000; /* Ensure it is above other elements */
+      }
+        
+    
 
         #processed-output {
             width: 100%;
             height: 100%;
+            border-radius: 6px;
         }
-    </style>
-    <style>
+        
+        #emotion {
+            color: #00c853;
+            font-weight: bold;
+            margin-top: 8px;
+            text-align: center;
+        }
+        
         video {
             width: 500px;
             height: 400px;
+        }
+        
+        .form-check {
+            margin: 15px 0;
+            padding: 12px 20px;
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-check:hover {
+            background-color: #333333;
+            transform: translateX(5px);
+        }
+        
+        .form-check-input {
+            margin-top: 6px;
+        }
+        
+        .form-check-label {
+            font-size: 16px;
+            padding-left: 10px;
+        }
+        
+        .text-danger {
+            color: #f06292;
+            font-weight: 600;
+            border-left: 4px solid #f06292;
+            padding-left: 15px;
+            margin: 25px 0 15px 0;
+        }
+        
+        .btn-success {
+            background-color: #2e7d32;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            border-radius: 6px !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #1b5e20;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #4fc3f7;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4fc3f7;
+        }
+        
+        h4 {
+            color: #ff9800;
+            font-style: italic;
+        }
+        
+        /* Custom radio buttons */
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #555;
+            border-radius: 50%;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        input[type="radio"]:checked {
+            background-color: #4fc3f7;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 8px #4fc3f7;
+        }
+        
+        /* Timer section */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .compact-timer {
+            background-color: #333;
+            color: #ffcc80;
+            border-radius: 6px;
+            padding: 8px 15px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            margin-left: auto;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timer-icon {
+            margin-right: 8px;
+            color: #ffcc80;
+        }
+        
+        .question-section {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 
@@ -44,210 +189,199 @@
     <div id="floating-window">
         <canvas id="processed-output" width="250" height="220"></canvas>
         <div id="emotion"></div>
-
     </div>
-
-    <script>
-        let emotionCount = {
-            'true': 0,
-            'false': 0,
-        };
     
-        let tempAlertCount = 0; // Temporary variable for alert count
-    
-        function handleEmotionAnalysis(data) {
-            const voilence_type = data.voilence_type
-            const status = data.result.toLowerCase(); // Convert to lowercase for case-insensitivity
-    
-            // Increment the count for the detected emotion
-            emotionCount[status]++;
-    
-            // Check if the user has exceeded the limit for any emotion
-            if (emotionCount['true'] > 3) {
-                alert('It seems like you are breaking the rules. Please concentrate and focus on the exam. Failure to do so may lead to termination of the exam.');
-    
-                // Reset emotion counts to zero
-                emotionCount = {
-                    'true': 0,
-                    'false': 0
-                 };
-    
-                // Increment temporary alert count
-                tempAlertCount++;
-    
-                // Redirect to '/' if the alert is shown more than 3 times
-                if (tempAlertCount > 3) {
-                    alert('Sorry your exam is terminated.');
-                    window.location.href = '/';
-                }
-            }
-    
-            // Rest of your existing code for updating the UI with emotion data
-            emotionDiv.innerHTML = `Status: ${voilence_type}`;
-            const processedContext = processedCanvas.getContext('2d');
-            const img = new Image();
-            img.onload = function () {
-                processedContext.drawImage(img, 0, 0, 250, 220);
-            };
-            img.src = 'data:image/jpeg;base64,' + data.processed_frame;
-        }
-    
-        const video = document.getElementById('camera');
-        const canvas = document.getElementById('output');
-        const emotionDiv = document.getElementById('emotion');
-        const processedCanvas = document.getElementById('processed-output'); // Add this line to get the new canvas
-    
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            });
-    
-        setInterval(() => {
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, 640, 480);
-    
-            // Capture the frame as a Blob
-            canvas.toBlob(blob => {
-                const formData = new FormData();
-                formData.append('frame', blob, 'frame.jpg');
-    
-                fetch('/student/process-emotion/', {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        handleEmotionAnalysis(data);
-                    })
-                    .catch(error => console.error('Error:', error));
-            }, 'image/jpeg');
-        }, 500);
-    
-        const floatingWindow = document.getElementById('floating-window');
-        let isDragging = false;
-        let offsetX, offsetY;
-    
-        floatingWindow.addEventListener('mousedown', (event) => {
-            isDragging = true;
-            offsetX = event.clientX - floatingWindow.getBoundingClientRect().left;
-            offsetY = event.clientY - floatingWindow.getBoundingClientRect().top;
-            floatingWindow.style.cursor = 'grabbing';
-        });
-    
-        document.addEventListener('mousemove', (event) => {
-            if (isDragging) {
-                const x = event.clientX - offsetX;
-                const y = event.clientY - offsetY;
-                floatingWindow.style.left = x + 'px';
-                floatingWindow.style.top = y + 'px';
-            }
-        });
-    
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            floatingWindow.style.cursor = 'grab';
-        });
-    
-        // Make the window resizable
-        let isResizing = false;
-        let currentX, currentY;
-    
-        floatingWindow.addEventListener('mousedown', (event) => {
-            if (event.target === floatingWindow) {
-                isResizing = true;
-                currentX = event.clientX;
-                currentY = event.clientY;
-            }
-        });
-    
-        document.addEventListener('mousemove', (event) => {
-            if (isResizing) {
-                const width = processedCanvas.offsetWidth + (event.clientX - currentX);
-                const height = processedCanvas.offsetHeight + (event.clientY - currentY);
-    
-                processedCanvas.style.width = `${width}px`;
-                processedCanvas.style.height = `${height}px`;
-    
-                currentX = event.clientX;
-                currentY = event.clientY;
-            }
-        });
-    
-        document.addEventListener('mouseup', () => {
-            isResizing = false;
-        });
-    
-        function saveAns() {
-            var ele = document.getElementsByTagName('input');
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].type = "radio") {
-                    if (ele[i].checked) {
-                        setCookie(ele[i].name, ele[i].value, 3)
-                    }
-                }
-            }
-        }
-    
-        function setCookie(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-    </script>
+    <div class="exam-header">
+        <h2><i class="fas fa-book-open"></i> Course: {{course.course_name}}</h2>
+        <div class="compact-timer">
+            <i class="fas fa-clock timer-icon"></i>
+            <span id="exam-timer">00:00:00</span>
+        </div>
+    </div>
 
     <form class="form" autocomplete="off" onsubmit="return saveAns()"
         action="/student/calculate-marks" method="POST">
         {% csrf_token %}
-        <h2 style="text-align: center;">Course: {{course.course_name}}</h2>
+        
         {% for q in questions%}
-        <h3 class="text-danger">{{ forloop.counter }}. {{q.question}}</h3>
-        <h4 style="text-align: right;">[{{q.marks}} Marks]</h4>
+        <div class="question-section">
+            <h3 class="text-danger">{{ forloop.counter }}. {{q.question}}</h3>
+            <h4 style="text-align: right;"><i class="fas fa-award"></i> [{{q.marks}} Marks]</h4>
 
-        <input type="hidden" name="csrfmiddlewaretoken"
-            value="C24rUotmdHawVQJL3KrqiWxvti8UffOFYUc8TRbZtLt36AVLdP3jbkzUVe3beRAa">
+            <input type="hidden" name="csrfmiddlewaretoken"
+                value="C24rUotmdHawVQJL3KrqiWxvti8UffOFYUc8TRbZtLt36AVLdP3jbkzUVe3beRAa">
 
-        <div class="form-check mx-4">
-            <input class="form-check-input" type="radio"
-                name="{{ forloop.counter }}" id="{{q.option1}}" value="Option1">
-            <label class="form-check-label" for="option1">
-                {{q.option1}}
-            </label>
+            <div class="form-check mx-4">
+                <input class="form-check-input" type="radio"
+                    name="{{ forloop.counter }}" id="{{q.option1}}" value="Option1">
+                <label class="form-check-label" for="option1">
+                    {{q.option1}}
+                </label>
+            </div>
+
+            <div class="form-check mx-4">
+                <input class="form-check-input" type="radio"
+                    name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
+                <label class="form-check-label" for="option2">
+                    {{q.option2}}
+                </label>
+            </div>
+
+            <div class="form-check mx-4">
+                <input class="form-check-input" type="radio"
+                    name="{{ forloop.counter }}" id="{{q.option3}}" value="Option3">
+                <label class="form-check-label" for="option3">
+                    {{q.option3}}
+                </label>
+            </div>
+
+            <div class="form-check mx-4">
+                <input class="form-check-input" type="radio"
+                    name="{{ forloop.counter }}" id="{{q.option4}}" value="Option4">
+                <label class="form-check-label" for="option4">
+                    {{q.option4}}
+                </label>
+            </div>
         </div>
-
-        <div class="form-check mx-4">
-            <input class="form-check-input" type="radio"
-                name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
-            <label class="form-check-label" for="option2">
-                {{q.option2}}
-            </label>
-        </div>
-
-        <div class="form-check mx-4">
-            <input class="form-check-input" type="radio"
-                name="{{ forloop.counter }}" id="{{q.option3}}" value="Option3">
-            <label class="form-check-label" for="option3">
-                {{q.option3}}
-            </label>
-        </div>
-
-        <div class="form-check mx-4">
-            <input class="form-check-input" type="radio"
-                name="{{ forloop.counter }}" id="{{q.option4}}" value="Option4">
-            <label class="form-check-label" for="option4">
-                {{q.option4}}
-            </label>
-        </div>
-
         {% endfor %}
-        <input class="btn btn-success btn-lg" style="border-radius: 0%;"
-            type="submit" value="Submit Answers">
+        
+        <button class="btn btn-success btn-lg" type="submit">
+            <i class="fas fa-paper-plane"></i> Submit Answers
+        </button>
     </form>
 </div>
 
 <script>
-    function saveAns() {
+    let emotionCount = {
+        'true': 0,
+        'false': 0,
+    };
 
+    let tempAlertCount = 0; // Temporary variable for alert count
+
+    function handleEmotionAnalysis(data) {
+        const voilence_type = data.voilence_type
+        const status = data.result.toLowerCase(); // Convert to lowercase for case-insensitivity
+
+        // Increment the count for the detected emotion
+        emotionCount[status]++;
+
+        // Check if the user has exceeded the limit for any emotion
+        if (emotionCount['true'] > 3) {
+            alert('It seems like you are breaking the rules. Please concentrate and focus on the exam. Failure to do so may lead to termination of the exam.');
+
+            // Reset emotion counts to zero
+            emotionCount = {
+                'true': 0,
+                'false': 0
+             };
+
+            // Increment temporary alert count
+            tempAlertCount++;
+
+            // Redirect to '/' if the alert is shown more than 3 times
+            if (tempAlertCount > 3) {
+                alert('Sorry your exam is terminated.');
+                window.location.href = '/';
+            }
+        }
+
+        // Rest of your existing code for updating the UI with emotion data
+        emotionDiv.innerHTML = `Status: ${voilence_type}`;
+        const processedContext = processedCanvas.getContext('2d');
+        const img = new Image();
+        img.onload = function () {
+            processedContext.drawImage(img, 0, 0, 250, 220);
+        };
+        img.src = 'data:image/jpeg;base64,' + data.processed_frame;
+    }
+
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('output');
+    const emotionDiv = document.getElementById('emotion');
+    const processedCanvas = document.getElementById('processed-output'); // Add this line to get the new canvas
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        });
+
+    setInterval(() => {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, 640, 480);
+
+        // Capture the frame as a Blob
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('frame', blob, 'frame.jpg');
+
+            fetch('/student/process-emotion/', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    handleEmotionAnalysis(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }, 'image/jpeg');
+    }, 500);
+
+    const floatingWindow = document.getElementById('floating-window');
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    floatingWindow.addEventListener('mousedown', (event) => {
+        isDragging = true;
+        offsetX = event.clientX - floatingWindow.getBoundingClientRect().left;
+        offsetY = event.clientY - floatingWindow.getBoundingClientRect().top;
+        floatingWindow.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (event) => {
+        if (isDragging) {
+            const x = event.clientX - offsetX;
+            const y = event.clientY - offsetY;
+            floatingWindow.style.left = x + 'px';
+            floatingWindow.style.top = y + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        floatingWindow.style.cursor = 'grab';
+    });
+
+    // Make the window resizable
+    let isResizing = false;
+    let currentX, currentY;
+
+    floatingWindow.addEventListener('mousedown', (event) => {
+        if (event.target === floatingWindow) {
+            isResizing = true;
+            currentX = event.clientX;
+            currentY = event.clientY;
+        }
+    });
+
+    document.addEventListener('mousemove', (event) => {
+        if (isResizing) {
+            const width = processedCanvas.offsetWidth + (event.clientX - currentX);
+            const height = processedCanvas.offsetHeight + (event.clientY - currentY);
+
+            processedCanvas.style.width = `${width}px`;
+            processedCanvas.style.height = `${height}px`;
+
+            currentX = event.clientX;
+            currentY = event.clientY;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+    });
+
+    function saveAns() {
         var ele = document.getElementsByTagName('input');
         for (i = 0; i < ele.length; i++) {
             if (ele[i].type = "radio") {
@@ -256,7 +390,6 @@
                 }
             }
         }
-
     }
 
     function setCookie(cname, cvalue, exdays) {
@@ -265,6 +398,31 @@
         var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
+    
+    // Replace the existing timer functionality
+let timeLeft = 5 * 60; // 5 minutes in seconds
+    
+    function updateTimer() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        
+        document.getElementById('exam-timer').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert('Time is up! Your exam will be submitted.');
+            document.querySelector('.form').submit();
+        } else {
+            timeLeft--;
+        }
+    }
+    
+    // Update timer every second
+    let timerInterval = setInterval(updateTimer, 1000);
+    
+    // Call once immediately to avoid delay in displaying the timer
+    updateTimer();
 </script>
 
 <br><br><br><br><br><br> {% endblock content %}

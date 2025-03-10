@@ -34,9 +34,133 @@
     </script>
 
     <style>
+        body {
+            background-color: #303030;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .jumbotron {
+            background-color: #404040;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-left: 5px solid #666;
+        }
+        
+        .card {
+            background-color: #383838;
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .card-title {
+            color: #d0d0d0;
+            font-weight: 600;
+            border-bottom: 2px solid #555;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .card-footer {
+            background-color: #333;
+            color: #d0d0d0;
+            padding: 12px;
+            border-radius: 0 0 6px 6px;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .text-danger {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+        
         video {
             width: 500px;
             height: 400px;
+            border-radius: 6px;
+            border: 3px solid #555;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            background-color: #2a2a2a;
+        }
+        
+        #but {
+            background-color: #505050;
+            color: #d0d0d0;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #but:hover {
+            background-color: #666;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        #but:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-success {
+            background-color: #505050;
+            border-color: #505050;
+            color: #d0d0d0;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 4px !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success:hover {
+            background-color: #666;
+            border-color: #666;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        #start_exam {
+            margin-top: 20px;
+        }
+        
+        strong {
+            color: #d0d0d0;
         }
     </style>
 
@@ -50,19 +174,17 @@
             <div class="card border-info mx-4 my-4">
                 <div class="card-body text-default">
 
-                    <h4 class="card-title">Exam Details :</h4>
+                    <h4 class="card-title">Exam Details</h4>
                     <p class="card-text">
                     </p>
                     <ul style="list-style:decimal;">
-                        <li>Course : {{course.course_name}}</li>
-                        <li>Total Question : {{total_questions}}</li>
-                        <li>Total Marks : {{total_marks}}</li>
+                        <li><strong>Course:</strong> {{course.course_name}}</li>
+                        <li><strong>Total Questions:</strong> {{total_questions}}</li>
+                        <li><strong>Total Marks:</strong> {{total_marks}}</li>
                     </ul>
                     <p></p>
 
-
-
-                    <h4 class="card-title">Rules :</h4>
+                    <h4 class="card-title">Rules</h4>
                     <p class="card-text">
                     </p>
                     <ul style="list-style:decimal;">
@@ -92,7 +214,7 @@
             <br>
             <br>
             <div id="start_exam" style="visibility: hidden;">
-                <a href="{% url 'start-exam' course.id  %}" class="btn btn-success" style="border-radius:0px;">Enter Examination</a>
+                <a href="{% url 'start-exam' course.id  %}" class="btn btn-success">Enter Examination</a>
                 <div class="card-footer">Best Of Luck, Students!</div>
             </div>
         </center>
