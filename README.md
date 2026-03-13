@@ -114,3 +114,10 @@ Improved student performance analytics
 Enhanced AI-based cheating detection
 
 Support for multiple languages
+
+## Project Screenshots
+![Dashboard](Screenshot 2025-03-13 224710.png)
+
+![Content Generation](Screenshot 2025-03-13 224732.png)
+
+![Proctoring](Screenshot 2025-03-13 225039.png)
