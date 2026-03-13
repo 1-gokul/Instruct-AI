@@ -1,4 +1,6 @@
 # Instruct-AI
+![Project](ps2.png)
+![Project](dashboard.png)
 Instruct AI – AI Powered Educational Content Generation and Proctoring System
 Overview
 
@@ -116,8 +118,5 @@ Enhanced AI-based cheating detection
 Support for multiple languages
 
 ## Project Screenshots
-![Dashboard](Screenshot 2025-03-13 224710.png)
-
-![Content Generation](Screenshot 2025-03-13 224732.png)
 
 ![Proctoring](ps1.png)
