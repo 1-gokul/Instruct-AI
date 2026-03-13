@@ -120,4 +120,4 @@ Support for multiple languages
 
 ![Content Generation](Screenshot 2025-03-13 224732.png)
 
-![Proctoring](Screenshot 2025-03-13 225039.png)
+![Proctoring](ps1.png)
