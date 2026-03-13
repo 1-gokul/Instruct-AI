@@ -104,20 +104,7 @@ The system achieved:
 
 F1 Score: 0.87, showing strong precision and recall balance
 
-Project Structure
-Instruct-AI/
-│
-├── content_generation/
-├── assessment_module/
-├── proctoring_system/
-├── evaluation_module/
-│
-├── models/
-├── static/
-├── templates/
-│
-├── requirements.txt
-└── README.md
+
 Future Improvements
 
 Integration with Learning Management Systems (LMS)
