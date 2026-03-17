@@ -86,9 +86,32 @@ Instruct AI addresses these problems by:
 
 ## 🚀 Getting Started
 
-### 1️⃣ Clone the repository
+### 1️⃣ Install Dependencies
+
 ```bash
-git clone https://github.com/your-username/instruct-ai.git
-cd instruct-ai
+pip install -r requirements.txt
+```
+
+### 2️⃣ Run the Server
+
+```bash
+python manage.py runserver
+```
+
+### 3️⃣ Open in Browser
+
+```
+http://127.0.0.1:8000/
+```
+
+---
+
+## 🔮 Future Improvements
+
+* Integration with LMS platforms (Moodle, Google Classroom)
+* Advanced student performance analytics dashboard
+* Enhanced AI-based cheating detection
+* Multi-language support
+
 
 ![Proctoring](ps1.png)
