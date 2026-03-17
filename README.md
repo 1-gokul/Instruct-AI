@@ -1,122 +1,94 @@
 # Instruct-AI
 ![Project](ps2.png)
 ![Project](dashboard.png)
-Instruct AI – AI Powered Educational Content Generation and Proctoring System
-Overview
+# Instruct AI 🚀  
+**AI-Powered Educational Content Generation & Exam Proctoring System**
 
-Instruct AI is an AI-driven educational platform designed to automate content generation, assessment creation, and exam proctoring. The system leverages Large Language Models (LLMs) and Computer Vision techniques to provide personalized learning materials and ensure exam integrity.
+## 📌 Overview
+Instruct AI is an AI-driven platform that automates **content generation, assessment creation, and exam proctoring**.  
+It combines **Large Language Models (LLMs)** and **Computer Vision** to enhance personalized learning and ensure exam integrity.
 
-The platform generates learning resources tailored to students’ needs and evaluates assessments automatically. It also integrates an AI-based proctoring system to monitor students during exams and detect suspicious activities.
+---
 
-Problem Statement
+## ❗ Problem Statement
+Traditional education systems face key challenges:
+- Lack of personalized learning materials  
+- Manual and time-consuming evaluation  
+- Difficulty maintaining integrity in online exams  
 
-Traditional education systems face challenges such as:
+---
 
-Lack of personalized learning materials
+## 💡 Solution
+Instruct AI addresses these problems by:
+- Generating personalized learning content using AI  
+- Automating quiz and assessment creation  
+- Evaluating answers using intelligent models  
+- Monitoring exams using computer vision  
 
-Manual and time-consuming assessment evaluation
+---
 
-Difficulty maintaining exam integrity in online environments
+## ⚙️ Key Features
 
-Instruct AI addresses these issues using Artificial Intelligence and Machine Learning techniques.
+### 📚 AI Content Generation
+- Generates study materials using LLMs  
+- Adapts content based on user input  
 
-Key Features
-1. AI-Based Content Generation
+### 📝 Automated Assessments
+- Auto-generates quizzes and questions  
+- Provides instant feedback  
 
-Generates educational content using Large Language Models (LLMs).
+### 🤖 AI Answer Evaluation
+- Evaluates subjective answers  
+- Gives performance insights  
 
-Creates learning materials based on curriculum and user input.
+### 🎥 AI Exam Proctoring
+- Eye movement detection using CNN  
+- Object detection (mobile phones, etc.) using YOLO  
+- Real-time monitoring of student activity  
 
-2. Automated Assessment Creation
+---
 
-Generates quizzes and assessments automatically.
+## 🏗️ System Architecture
+- **Content Generation Module** → LLM-based material generation  
+- **Assessment Module** → Question generation  
+- **Evaluation Module** → AI-based answer checking  
+- **Proctoring Module** → CNN + YOLO-based monitoring  
 
-Provides instant feedback after evaluation.
+---
 
-3. AI-Based Answer Evaluation
+## 🛠️ Tech Stack
 
-Evaluates student responses using AI models.
+### Programming Languages
+- Python  
+- JavaScript  
 
-Provides performance insights and feedback.
+### AI / ML
+- Large Language Models (LLMs)  
+- Convolutional Neural Networks (CNN)  
+- YOLO Object Detection  
 
-4. AI Exam Proctoring
+### Frameworks & Libraries
+- Django (Backend)  
+- OpenCV  
+- NumPy  
 
-Ensures exam integrity using computer vision techniques:
+### Tools
+- Git  
+- GitHub  
 
-CNN-based eye movement detection
+---
 
-YOLO object detection for detecting mobile phones or suspicious objects
+## 📊 Performance
+- Accuracy: **90%** in proctoring & evaluation  
+- F1 Score: **0.87**  
 
-Monitoring student activity during exams
+---
 
-System Architecture
+## 🚀 Getting Started
 
-The system consists of the following modules:
-
-Content Generation Module
-
-Generates study materials using LLMs.
-
-Assessment Module
-
-Automatically generates exam questions.
-
-Evaluation Module
-
-AI evaluates student answers and provides feedback.
-
-Proctoring Module
-
-Uses CNN and YOLO to detect suspicious behaviour.
-
-Technologies Used
-Programming
-
-Python
-
-JavaScript
-
-AI / Machine Learning
-
-Large Language Models (LLMs)
-
-Convolutional Neural Networks (CNN)
-
-YOLO Object Detection
-
-Frameworks & Libraries
-
-Django (Backend)
-
-OpenCV
-
-NumPy
-
-Tools
-
-Git
-
-GitHub
-
-Performance
-
-The system achieved:
-
-90% accuracy in proctoring and assessment tasks
-
-F1 Score: 0.87, showing strong precision and recall balance
-
-
-Future Improvements
-
-Integration with Learning Management Systems (LMS)
-
-Improved student performance analytics
-
-Enhanced AI-based cheating detection
-
-Support for multiple languages
-
-## Project Screenshots
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/your-username/instruct-ai.git
+cd instruct-ai
 
 ![Proctoring](ps1.png)
