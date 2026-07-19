@@ -79,7 +79,7 @@ Instruct AI addresses these problems by:
 ---
 
 ## 📊 Performance
-- Accuracy: **90%** in proctoring & evaluation  
+- Accuracy: **91%** in proctoring & evaluation  
 - F1 Score: **0.87**  
 
 ---
